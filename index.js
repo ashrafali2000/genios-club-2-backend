@@ -69,5 +69,5 @@ const serializedResponse = JSON.stringify(response.events.args, (key, value) =>
 );
 console.log(`These are all the events that we need:=> ${serializedResponse}`);
 app.listen(3000, () => {
-  console.log("Server is running on Port 3000");
+  console.log(`These are all the events that we need:=> ${serializedResponse}`);
 });
