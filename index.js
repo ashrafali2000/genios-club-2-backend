@@ -13,9 +13,6 @@ import "dotenv/config";
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.get("/", function (req, res) {
-  res.send("Server is running...");
-});
 
 // create the client with your clientId, or secretKey if in a server environment
 const client = createThirdwebClient({
@@ -68,6 +65,9 @@ const serializedResponse = JSON.stringify(response.events.args, (key, value) =>
   typeof value === "bigint" ? value.toString() : value
 );
 console.log(`These are all the events that we need:=> ${serializedResponse}`);
+app.get("/", function (req, res) {
+  res.send(`Server is running.....and...Data.....${serializedResponse}`);
+});
 app.listen(3000, () => {
   console.log(`These are all the events that we need:=> ${serializedResponse}`);
 });
