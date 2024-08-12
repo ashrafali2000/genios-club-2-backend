@@ -19,22 +19,15 @@ const client = createThirdwebClient({
   clientId: process.env.CLIENT_ID,
 });
 
-// Access the provider from the client (it's an ethers.js provider)
-// const provider = new ethers.providers.JsonRpcProvider(
-//   "https://rpc.testnet.fantom.network"
-// );
-
-// const getCurrentBlockNumber = async () => {
-//   try {
-//     const blockNumber = await provider.getBlockNumber();
-//     console.log("Current Block Number:", blockNumber);
-//     return blockNumber;
-//   } catch (error) {
-//     console.error("Error fetching block number:", error);
-//   }
-// };
-
-// getCurrentBlockNumber();
+const DbPassword = process.env.USER_PASSWORD1;
+mongoose
+  .connect(``)
+  .then(() => {
+    console.log("DataBase is connected--->");
+  })
+  .catch((err) => {
+    console.log("err------>", err);
+  });
 // connect to your contract
 const myContract = getContract({
   client,
