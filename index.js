@@ -16,7 +16,6 @@ app.use(express.json());
 
 // create the client with your clientId, or secretKey if in a server environment
 const client = createThirdwebClient({
-  // secretKey: "dfKqHzi2rb5RpeidV0ZY0pClyhp834GjDcFUwbNBrJQ4mxmtpoi1zvasSgIwUh-pfwT2FTOS45CeVGI4m2rw0g",
   clientId: process.env.CLIENT_ID,
 });
 
