@@ -44,34 +44,106 @@ const preparedEvent = prepareEvent({
 });
 
 
+// States
+class Eventual {
+  constructor(user, sponcer, amount, time) {
+    this.user = user;
+    this.sponcer = sponcer;
+    this.amount = amount;
+    this.time = time;
+  }
+}
+
+var even = [];
+var fromBlock = BigInt(26562743);
+
+
 const events = await getContractEvents({
   contract: myContract,
-  fromBlock: 26562743n,
-  toBlock: 26562797n,
+  fromBlock: fromBlock,
+  toBlock: (fromBlock + BigInt(425)),
   events: [preparedEvent],
 });
 
-const response = {
-  events: events[0],
-};
-
+// const response = {
+//   events: events[0],
+// };
+let response;
+let num1;
+let num2;
+let num3;
+let num4;
 // Convert BigInt values to strings for serialization
-let serializedResponse;
+// let serializedResponse;
+
 setTimeout(() => {
-  serializedResponse = JSON.stringify(response?.events?.args, (key, value) =>
-    typeof value === "bigint" ? value.toString() : value
-  );
-  console.log(`These are all the events that we need:=> ${serializedResponse}`);
-}, 2000);
+  function save() {
+    for (let i = 0; i < events.length; i++) {
+      response = {
+        events: events[i],
+      };
+      // Convert BigInt values to strings for serialization
+      const User = JSON.stringify(response.events.args._user, (key, value) =>
+        typeof value === "bigint" ? value.toString() : value
+      );
+
+      const Sponcer = JSON.stringify(
+        response.events.args._sponcer,
+        (key, value) => (typeof value === "bigint" ? value.toString() : value)
+      );
+
+      const Amount = JSON.stringify(response.events.args.amount, (key, value) =>
+        typeof value === "bigint" ? value.toString() : value
+      );
+
+      const Time = JSON.stringify(response.events.args.time, (key, value) =>
+        typeof value === "bigint" ? value.toString() : value
+      );
+      var en = new Eventual(User, Sponcer, Amount, Time);
+      console.log("this =>", en);
+      // To DataBase
+      even.push(en);
+    }
+  }
+  save();
+  function run2() {
+    for (let i = 0; i < even.length; i++) {
+      let userNumber = JSON.stringify(even[i].user, (key, value) =>
+        typeof value === "bigint" ? value.toString() : value
+      );
+      let SponcerNumber = JSON.stringify(even[i].sponcer, (key, value) =>
+        typeof value === "bigint" ? value.toString() : value
+      );
+      let AmountNumber = JSON.stringify(even[i].amount, (key, value) =>
+        typeof value === "bigint" ? value.toString() : value
+      );
+      let TimeNumber = JSON.stringify(even[i].time, (key, value) =>
+        typeof value === "bigint" ? value.toString() : value
+      );
+
+      num1 = Number(userNumber.replace(/[^0-9]/g, ""));
+      num2 = Number(SponcerNumber.replace(/[^0-9]/g, ""));
+      num3 = Number(AmountNumber.replace(/[^0-9]/g, ""));
+      num4 = Number(TimeNumber.replace(/[^0-9]/g, ""));
+
+      console.log(`New User:=> ${num1}, ${num2}, ${num3}, ${num4}`);
+    }
+    console.log("1: ", fromBlock.toString());
+    // to Database
+    fromBlock = fromBlock + BigInt(425);
+    console.log("2: ", fromBlock.toString());
+  }
+  run2();
+}, 5500);
 
 app.get("/", function (req, res) {
-  res.send(`Server is running.....and...Data.....${serializedResponse}`);
+  res.send(`Server is running.....and...Data.....${num1, num2,num3, num4}`);
 });
 app.use("/block", function (req, res) {
-  res.send(`Server is running.....and...Data.....${serializedResponse}`);
+  res.send(`Server is running.....and...Data.....${num1, num2,num3, num4}`);
 });
 app.listen(3001, () => {
   console.log(
-    `These are all the events that we need:=> ${serializedResponse} ${3001}`
+    `These are all the events that we need:=> ${num1, num2,num3, num4} ${3001}`
   );
 });
