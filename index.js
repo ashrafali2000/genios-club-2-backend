@@ -137,7 +137,7 @@ setTimeout(() => {
 }, 5500);
 
 app.get("/", function (req, res) {
-  res.send(`Server is running 1 .....and...Data.....${num1, num2,num3, num4}`);
+  res.send(`Server is running 1 .....and...Data.....${num1}`);
 });
 app.use("/block", function (req, res) {
   res.send(`Server is running 2 .....and...Data.....${num1, num2,num3, num4}`);
