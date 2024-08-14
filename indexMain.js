@@ -116,6 +116,7 @@ async function FetchingData(){
         // To DataBase
         // even.push(en);
       }
+      fromBlock = fromBlock + BigInt(360)
 }
 // Call the function every 2 minutes (120,000 milliseconds)
 setInterval(FetchingData, 60000);
