@@ -8,7 +8,6 @@ import express, { json } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import { defineChain } from "thirdweb/chains";
-import { ethers } from "ethers";
 import "dotenv/config";
 const app = express();
 app.use(cors());
@@ -16,7 +15,8 @@ app.use(express.json());
 
 // create the client with your clientId, or secretKey if in a server environment
 const client = createThirdwebClient({
-  clientId: process.env.CLIENT_ID,
+  // clientId: process.env.CLIENT_ID,
+  clientId: "467b42b016f89ecb921c9d662da99fd1",
 });
 
 const DbPassword = process.env.USER_PASSWORD1;
@@ -68,6 +68,7 @@ const events = await getContractEvents({
 // const response = {
 //   events: events[0],
 // };
+
 let response;
 let num1;
 let num2;
@@ -76,8 +77,8 @@ let num4;
 // Convert BigInt values to strings for serialization
 // let serializedResponse;
 
-setTimeout(() => {
-  function save() {
+
+  function run1() {
     for (let i = 0; i < events.length; i++) {
       response = {
         events: events[i],
@@ -100,12 +101,11 @@ setTimeout(() => {
         typeof value === "bigint" ? value.toString() : value
       );
       var en = new Eventual(User, Sponcer, Amount, Time);
-      console.log("this =>", en);
+      // console.log("this =>", en);
       // To DataBase
       even.push(en);
     }
   }
-  save();
   function run2() {
     for (let i = 0; i < even.length; i++) {
       let userNumber = JSON.stringify(even[i].user, (key, value) =>
@@ -133,14 +133,17 @@ setTimeout(() => {
     fromBlock = fromBlock + BigInt(425);
     console.log("2: ", fromBlock.toString());
   }
+
+setInterval(() => {
+  run1();
   run2();
-}, 5500);
+}, 800);
 
 app.get("/", function (req, res) {
-  res.send(`Server is running 1 .....and...Data.....${num1}`);
+  res.send(`Server is running 1 => and > Data: ${num1}`);
 });
 app.use("/block", function (req, res) {
-  res.send(`Server is running 2 .....and...Data.....${num1, num2,num3, num4}`);
+  res.send(`Server is running 2 .....and...Data.....${num1,num2,num3, num4}`);
 });
 app.listen(3001, () => {
   console.log(
