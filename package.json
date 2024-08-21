@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "devStart": "nodemon indexMain.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "ethers": "^6.13.2",
     "express": "^4.19.2",
     "mongoose": "^8.5.2",
+    "nodemon": "^3.1.4",
     "thirdweb": "^5.45.0"
   }
 }
