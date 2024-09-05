@@ -543,7 +543,7 @@ const userRoutes = router.get("/", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-const upgradeRoutes = router.get("/upgrade", async (req, res) => {
+const upgradeRoutes = router.get("/", async (req, res) => {
   try {
     await mongoose.connect(process.env.URL, clientOptions);
 
@@ -555,7 +555,7 @@ const upgradeRoutes = router.get("/upgrade", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-const recycleRoutes = router.get("/recycle", async (req, res) => {
+const recycleRoutes = router.get("/", async (req, res) => {
   try {
     await mongoose.connect(process.env.URL, clientOptions);
 
