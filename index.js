@@ -171,7 +171,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 const router = express.Router();
-var fromBlock = 26658274n;
+// var fromBlock = 26658274n;
+var fromBlock = 26669952n;
 var data;
 
 // *** contract ***
@@ -402,6 +403,7 @@ const FetchInfoUpgradeEvent = async () => {
         value2.splice(i, -1);
         value3.splice(i, -1);
         value4.splice(i, -1);
+        value5.splice(i, -1);
         // UpgradeEvents.splice(i, -1);
       } else if (UpgradeEvents.length == i) {
         while (UpgradeEvents.length > 0) {
@@ -410,17 +412,18 @@ const FetchInfoUpgradeEvent = async () => {
           value2.pop();
           value3.pop();
           value4.pop();
+          value5.pop();
         }
       }
     }
   };
   await run();
-  // await mongoose.connect(process.env.URL, clientOptions);
+  await mongoose.connect(process.env.URL, clientOptions);
 
-  // console.log("Connected to MongoDB");
-  // await run2();
-  // await mongoose.disconnect();
-  // console.log("Disconnected from MongoDB");
+  console.log("Connected to MongoDB");
+  await run2();
+  await mongoose.disconnect();
+  console.log("Disconnected from MongoDB");
 };
 const FetchInfoRecycledEvent = async () => {
   let value1 = [];
@@ -454,7 +457,7 @@ const FetchInfoRecycledEvent = async () => {
           typeof value === "bigint" ? value.toString() : value
         )
       );
-      value4.push(
+      value5.push(
         JSON.stringify(RecycledEvents[i].args.newMatrix, (key, value) =>
           typeof value === "bigint" ? value.toString() : value
         )
@@ -492,6 +495,7 @@ const FetchInfoRecycledEvent = async () => {
           sponcerId: value2[i],
           amount: value3[i],
           time: value4[i],
+          newMatrix: value5[i],
         });
         await user.save().then(() => {
           console.log(
@@ -502,6 +506,7 @@ const FetchInfoRecycledEvent = async () => {
         value2.splice(i, -1);
         value3.splice(i, -1);
         value4.splice(i, -1);
+        value5.splice(i, -1);
       } else if (RecycledEvents.length == i) {
         while (RecycledEvents.length > 0) {
           RecycledEvents.pop();
@@ -509,6 +514,7 @@ const FetchInfoRecycledEvent = async () => {
           value2.pop();
           value3.pop();
           value4.pop();
+          value5.pop();
         }
       }
     }
@@ -526,9 +532,9 @@ const FetchInfoRecycledEvent = async () => {
 
 app.listen(3001, () => {
   console.log(`Server is running on port 3001`),
-    setInterval(FetchInfo, 4000),
-    setInterval(FetchInfoUpgradeEvent, 8000);
-  setInterval(FetchInfoRecycledEvent, 12000);
+    // setInterval(FetchInfoUpgradeEvent, 4000);
+    // setInterval(FetchInfoRecycledEvent, 4000);
+    setInterval(FetchInfo, 4000);
 });
 
 const userRoutes = router.get("/", async (req, res) => {
@@ -548,8 +554,8 @@ const upgradeRoutes = router.get("/", async (req, res) => {
     await mongoose.connect(process.env.URL, clientOptions);
 
     console.log("Connected to MongoDB");
-    const users = await upgrade.find();
-    res.json(users);
+    const upgradeData = await upgrade.find();
+    res.json(upgradeData);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -560,8 +566,8 @@ const recycleRoutes = router.get("/", async (req, res) => {
     await mongoose.connect(process.env.URL, clientOptions);
 
     console.log("Connected to MongoDB");
-    const users = await recycle.find();
-    res.json(users);
+    const recycleData = await recycle.find();
+    res.json(recycleData);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
