@@ -572,9 +572,9 @@ const recycleRoutes = router.get("/recycledata", async (req, res) => {
   }
 });
 
-app.use("/newusers", userRoutes);
-app.use("/upgrade", upgradeRoutes);
-app.use("/recycle", recycleRoutes);
+app.use("/api", userRoutes);
+app.use("/api", upgradeRoutes);
+app.use("/api", recycleRoutes);
 // app.post("/newusers",userRoutes.get("/newusers", async(res,req)=>{
 //     const post = await
 // }) )
