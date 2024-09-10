@@ -531,13 +531,10 @@ const FetchInfoRecycledEvent = async () => {
 // / Run every 2 seconds
 
 app.listen(3001, () => {
-  console.log(`Server is running on port 3001`),
-    // setInterval(FetchInfoUpgradeEvent, 4000);
-    // setInterval(FetchInfoRecycledEvent, 4000);
-    setInterval(FetchInfo, 4000);
+  console.log(`Server is running on port 3001`);
 });
 
-const userRoutes = router.get("/", async (req, res) => {
+const userRoutes = router.get("/newusersdata", async (req, res) => {
   try {
     await mongoose.connect(process.env.URL, clientOptions);
 
@@ -549,19 +546,20 @@ const userRoutes = router.get("/", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-const upgradeRoutes = router.get("/", async (req, res) => {
+const upgradeRoutes = router.get("/upgradedata", async (req, res) => {
   try {
     await mongoose.connect(process.env.URL, clientOptions);
 
-    console.log("Connected to MongoDB");
+    console.log("Connected to MongoDB 123");
     const upgradeData = await upgrade.find();
+    console.log("Connected to upgradeData", upgradeData);
     res.json(upgradeData);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
   }
 });
-const recycleRoutes = router.get("/", async (req, res) => {
+const recycleRoutes = router.get("/recycledata", async (req, res) => {
   try {
     await mongoose.connect(process.env.URL, clientOptions);
 
